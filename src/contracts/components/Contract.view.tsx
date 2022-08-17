@@ -1,11 +1,12 @@
+import { Table, Td, Th, THead } from "../../base/Table";
 import { Contract } from "../../types/types";
 
 export const ContractItem = ({ id, company, contractor, date }: Contract) => {
   return (
     <tr>
-      <td>{company.name}</td>
-      <td>{contractor.name}</td>
-      <td>{date.toLocaleString()}</td>
+      <Td style={{ width: "30%" }}>{company.name}</Td>
+      <Td>{contractor.name}</Td>
+      <Td>{date.toLocaleString()}</Td>
     </tr>
   );
 };
@@ -16,18 +17,20 @@ interface ContractListProps {
 
 export const ContractList = ({ contracts }: ContractListProps) => {
   return (
-    <table>
-      <thead>
+    <Table>
+      <THead>
         <tr>
-          <th>업체명</th>
-          <th>계약자</th>
-          <th>계약일</th>
+          <Th>업체명</Th>
+          <Th>계약자</Th>
+          <Th>계약일</Th>
         </tr>
-      </thead>
+      </THead>
       <tbody>
         {contracts &&
-          contracts.map((contract) => <ContractItem {...contract} />)}
+          contracts.map((contract) => (
+            <ContractItem key={contract.id} {...contract} />
+          ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
