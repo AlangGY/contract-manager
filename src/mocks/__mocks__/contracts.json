@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "company": {
+      "name": "업체 1"
+    },
+    "contractor": {
+      "id": "1",
+      "name": "Alang",
+      "isAdmin": true
+    },
+    "timestamp": 1660749971987
+  },
+  {
+    "id": "2",
+    "company": {
+      "name": "업체 2"
+    },
+    "contractor": {
+      "id": "2",
+      "name": "Mooho",
+      "isAdmin": false
+    },
+    "timestamp": 1660749100000
+  }
+]
