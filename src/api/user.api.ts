@@ -2,7 +2,11 @@ import { User } from "@models/types";
 import axios from "axios";
 
 const getUsers = async () => {
-  return axios.get<User[]>("/user").then((res) => res.data);
+  try {
+    return axios.get<User[]>("/user").then((res) => res.data);
+  } catch (e) {
+    return [];
+  }
 };
 
 const UserAPI = {

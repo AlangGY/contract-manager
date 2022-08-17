@@ -6,14 +6,18 @@ interface ContractResponse extends Omit<Contract, "date"> {
 }
 
 const getContracts = async (): Promise<Contract[]> => {
-  const response = await axios.get<ContractResponse[]>("/contract");
+  try {
+    const response = await axios.get<ContractResponse[]>("/contract");
 
-  return response.data.map(({ id, company, contractor, timestamp }) => ({
-    id,
-    company,
-    contractor,
-    date: new Date(timestamp),
-  }));
+    return response.data.map(({ id, company, contractor, timestamp }) => ({
+      id,
+      company,
+      contractor,
+      date: new Date(timestamp),
+    }));
+  } catch (e) {
+    return [];
+  }
 };
 
 const ContractAPI = {
