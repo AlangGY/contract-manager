@@ -1,5 +1,5 @@
-import { Table, Td, Th, THead } from "../../base/Table";
-import { Contract } from "../../types/types";
+import { Table, Td, Th, THead } from "@base/Table";
+import { Contract } from "@models/types";
 
 export const ContractItem = ({ id, company, contractor, date }: Contract) => {
   return (

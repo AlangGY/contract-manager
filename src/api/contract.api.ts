@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Contract } from "../types/types";
+import { Contract } from "@models/types";
 
 interface ContractResponse extends Omit<Contract, "date"> {
   timestamp: number;

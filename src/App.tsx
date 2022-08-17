@@ -1,5 +1,5 @@
-import { ContractList } from "./contracts/components/Contract.view";
-import useContracts from "./contracts/hooks/use-contracts.hook";
+import { ContractList } from "@domain/contracts/components/Contract.view";
+import useContracts from "@domain/contracts/hooks/use-contracts.hook";
 
 function App() {
   const [contracts, fetchContracts] = useContracts();
