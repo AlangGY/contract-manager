@@ -9,6 +9,8 @@ const getContracts = async (): Promise<Contract[]> => {
   try {
     const response = await axios.get<ContractResponse[]>("/contract");
 
+    if (!response.data) throw new Error("failed to fetch contract");
+
     return response.data.map(({ id, company, contractor, timestamp }) => ({
       id,
       company,
