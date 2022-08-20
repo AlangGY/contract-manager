@@ -1,8 +1,7 @@
-import { ContractList } from "@domain/contracts/components/Contract.view";
-import useContracts from "@domain/contracts/hooks/use-contracts.hook";
-import UserSelect from "@domain/login/components/UserSelect";
-import useUsers from "@domain/login/hooks/use-user.hook";
+import { styled } from "@stitches/react";
 import { Route, Routes } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import PageWithHeaderLayout from "./layouts/PageWithHeaderLayout";
 import Admin from "./pages/Admin/Admin.page";
 import AdminContracts from "./pages/Admin/AdminContracts.page";
 import AdminUsers from "./pages/Admin/AdminUsers.page";
@@ -12,28 +11,29 @@ import Home from "./pages/Home/Home.page";
 import Login from "./pages/Login/Login.page";
 
 function App() {
-  const [contracts, fetchContracts] = useContracts();
-  const [users] = useUsers();
-
   return (
-    <div className="App">
+    <AppContainer>
       <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="login" element={<Login />} />
+        <Route element={<PageWithHeaderLayout />}>
+          <Route path="/" element={<Home />} />
           <Route path="contracts" element={<Contracts />} />
           <Route path="contracts/new" element={<ContractsNew />} />
+          <Route path="/admin" element={<Admin />}>
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="contracts" element={<AdminContracts />} />
+          </Route>
         </Route>
-        <Route path="/admin" element={<Admin />}>
-          <Route path="users" element={<AdminUsers />} />
-          <Route path="contracts" element={<AdminContracts />} />
+        <Route element={<MainLayout />}>
+          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
-      <button onClick={() => fetchContracts()}>새로 고침</button>
-      <ContractList contracts={contracts} />
-
-      <UserSelect users={users} />
-    </div>
+    </AppContainer>
   );
 }
 
 export default App;
+
+const AppContainer = styled("div", {
+  width: "100%",
+  height: "100%",
+});

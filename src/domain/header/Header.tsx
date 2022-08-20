@@ -1,4 +1,5 @@
-import { HEADER_HEIGHT } from "@constants/styles.constant";
+import { grey } from "@ant-design/colors";
+import { BODY_PADDING, HEADER_HEIGHT } from "@constants/styles.constant";
 import useUsers from "@domain/login/hooks/use-user.hook";
 import { styled } from "@stitches/react";
 import { Space } from "antd";
@@ -27,10 +28,12 @@ const Container = styled("header", {
   top: 0,
   width: "100%",
   height: HEADER_HEIGHT,
+  padding: `0 ${BODY_PADDING}px`,
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "0 10px 0 10px",
+  backgroundColor: "white",
+  boxShadow: `0 1px 2px 0px ${grey.primary}`,
 });
 
 const LeftSide = styled("div", {});

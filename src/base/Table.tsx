@@ -1,6 +1,7 @@
 import { styled } from "@stitches/react";
 
 export const Table = styled("table", {
+  width: "100%",
   border: "black 1px solid",
   borderCollapse: "collapse",
   boxSizing: "border-box",

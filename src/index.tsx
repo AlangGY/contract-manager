@@ -11,9 +11,11 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const globalStyles = globalCss({
+  "*": {
+    boxSizing: "border-box",
+  },
   body: {
     margin: 0,
-    padding: 0,
     width: "100%",
     height: "100vh",
   },
