@@ -7,7 +7,6 @@ import Admin from "./pages/Admin/Admin.page";
 import AdminContracts from "./pages/Admin/AdminContracts.page";
 import AdminUsers from "./pages/Admin/AdminUsers.page";
 import Contracts from "./pages/Contracts/Contracts.page";
-import ContractsNew from "./pages/Contracts/ContractsNew.page";
 import Home from "./pages/Home/Home.page";
 import Login from "./pages/Login/Login.page";
 
@@ -19,7 +18,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route element={<PageWithAuthLayout />}>
             <Route path="contracts" element={<Contracts />} />
-            <Route path="contracts/new" element={<ContractsNew />} />
             <Route path="/admin" element={<Admin />}>
               <Route path="users" element={<AdminUsers />} />
               <Route path="contracts" element={<AdminContracts />} />

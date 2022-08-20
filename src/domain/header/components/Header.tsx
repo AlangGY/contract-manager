@@ -19,7 +19,6 @@ export default function Header() {
         </Link>
         <Navigation>
           <Link to="contracts">Contracts</Link>
-          <Link to="contracts/new">계약 생성</Link>
         </Navigation>
       </LeftSide>
       <RightSide>
