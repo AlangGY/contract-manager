@@ -4,10 +4,9 @@ import { styled } from "@stitches/react";
 import { loginUserAtom } from "@store/atoms/userAtom";
 import { Space } from "antd";
 import { useAtom } from "jotai";
-import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo.view";
-import UserNav from "./UserNav";
+import UserNav from "./UserNav.view";
 
 export default function Header() {
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
@@ -53,7 +52,4 @@ const Container = styled("header", {
 
 const LeftSide = styled(Space, {});
 const RightSide = styled(Space, {});
-
-const Navigation = ({ children }: { children: ReactNode }) => {
-  return <Space>{children}</Space>;
-};
+const Navigation = styled(Space, {});
