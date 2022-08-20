@@ -1,5 +1,6 @@
 import { styled } from "@stitches/react";
 import { Route, Routes } from "react-router-dom";
+import PageWithAuthLayout from "./layouts/PageWithAuthLayout";
 import MainLayout from "./layouts/MainLayout";
 import PageWithHeaderLayout from "./layouts/PageWithHeaderLayout";
 import Admin from "./pages/Admin/Admin.page";
@@ -16,11 +17,13 @@ function App() {
       <Routes>
         <Route element={<PageWithHeaderLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="contracts" element={<Contracts />} />
-          <Route path="contracts/new" element={<ContractsNew />} />
-          <Route path="/admin" element={<Admin />}>
-            <Route path="users" element={<AdminUsers />} />
-            <Route path="contracts" element={<AdminContracts />} />
+          <Route element={<PageWithAuthLayout />}>
+            <Route path="contracts" element={<Contracts />} />
+            <Route path="contracts/new" element={<ContractsNew />} />
+            <Route path="/admin" element={<Admin />}>
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="contracts" element={<AdminContracts />} />
+            </Route>
           </Route>
         </Route>
         <Route element={<MainLayout />}>

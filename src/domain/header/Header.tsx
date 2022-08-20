@@ -2,13 +2,15 @@ import { grey } from "@ant-design/colors";
 import { BODY_PADDING, HEADER_HEIGHT } from "@constants/styles.constant";
 import useUsers from "@domain/login/hooks/use-user.hook";
 import { styled } from "@stitches/react";
+import { loginUserAtom } from "@store/atoms/userAtom";
 import { Space } from "antd";
+import { useAtom } from "jotai";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import UserNav from "./UserNav";
 
 export default function Header() {
-  const [users] = useUsers();
+  const [loginUser] = useAtom(loginUserAtom);
 
   return (
     <Container>
@@ -18,7 +20,13 @@ export default function Header() {
           <Nav />
         </Space>
       </LeftSide>
-      <RightSide>{users[0] && <UserNav user={users[0]} />}</RightSide>
+      <RightSide>
+        {loginUser ? (
+          <UserNav user={loginUser} />
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
+      </RightSide>
     </Container>
   );
 }
