@@ -1,6 +1,5 @@
 import { grey } from "@ant-design/colors";
 import { BODY_PADDING, HEADER_HEIGHT } from "@constants/styles.constant";
-import useUsers from "@domain/login/hooks/use-user.hook";
 import { styled } from "@stitches/react";
 import { loginUserAtom } from "@store/atoms/userAtom";
 import { Space } from "antd";
@@ -10,7 +9,7 @@ import Logo from "./Logo";
 import UserNav from "./UserNav";
 
 export default function Header() {
-  const [loginUser] = useAtom(loginUserAtom);
+  const [loginUser, setLoginUser] = useAtom(loginUserAtom);
 
   return (
     <Container>
@@ -22,9 +21,9 @@ export default function Header() {
       </LeftSide>
       <RightSide>
         {loginUser ? (
-          <UserNav user={loginUser} />
+          <UserNav user={loginUser} onLogout={() => setLoginUser(null)} />
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/login">로그인</Link>
         )}
       </RightSide>
     </Container>

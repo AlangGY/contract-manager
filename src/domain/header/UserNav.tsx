@@ -4,27 +4,26 @@ import { styled } from "@stitches/react";
 import { Dropdown, Menu, Space, Typography } from "antd";
 import "antd/dist/antd.css";
 
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <Typography.Text>비밀번호 변경하기</Typography.Text>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item>
-      <Typography.Text type="danger">로그아웃</Typography.Text>
-    </Menu.Item>
-  </Menu>
-);
-
 interface Props {
   user: User;
+  onLogout?: () => void;
 }
 
-export default function UserNav({ user }: Props) {
+export default function UserNav({ user, onLogout }: Props) {
   return (
     <Dropdown
       getPopupContainer={() => document.querySelector("#root") || document.body}
-      overlay={menu}
+      overlay={
+        <Menu>
+          <Menu.Item>
+            <Typography.Text>비밀번호 변경하기</Typography.Text>
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item onClick={onLogout}>
+            <Typography.Text type="danger">로그아웃</Typography.Text>
+          </Menu.Item>
+        </Menu>
+      }
       trigger={["hover"]}
     >
       <Container>
