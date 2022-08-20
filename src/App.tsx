@@ -1,6 +1,6 @@
 import { ContractList } from "@domain/contracts/components/Contract.view";
 import useContracts from "@domain/contracts/hooks/use-contracts.hook";
-import UserList from "@domain/login/components/UserList";
+import UserSelect from "@domain/login/components/UserSelect";
 import useUsers from "@domain/login/hooks/use-user.hook";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <button onClick={() => fetchContracts()}>새로 고침</button>
       <ContractList contracts={contracts} />
 
-      <UserList users={users} />
+      <UserSelect users={users} />
     </div>
   );
 }

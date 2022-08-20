@@ -4,17 +4,17 @@ interface UserListProps {
   users: User[];
 }
 
-export default function UserList({ users }: UserListProps) {
+export default function UserSelect({ users }: UserListProps) {
   return (
     <ul>
       {users.map((user) => (
-        <UserItem {...user} />
+        <UserOption {...user} />
       ))}
     </ul>
   );
 }
 
-const UserItem = ({ id, name, isAdmin }: User) => {
+const UserOption = ({ id, name, isAdmin }: User) => {
   return (
     <li>
       <label>
