@@ -4,8 +4,9 @@ import { styled } from "@stitches/react";
 import { loginUserAtom } from "@store/atoms/userAtom";
 import { Space } from "antd";
 import { useAtom } from "jotai";
+import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import Logo from "./Logo";
+import Logo from "./Logo.view";
 import UserNav from "./UserNav";
 
 export default function Header() {
@@ -14,14 +15,21 @@ export default function Header() {
   return (
     <Container>
       <LeftSide>
-        <Space>
+        <Link to="/">
           <Logo />
-          <Nav />
-        </Space>
+        </Link>
+        <Navigation>
+          <Link to="contracts">Contracts</Link>
+          <Link to="contracts/new">계약 생성</Link>
+        </Navigation>
       </LeftSide>
       <RightSide>
         {loginUser ? (
-          <UserNav user={loginUser} onLogout={() => setLoginUser(null)} />
+          <UserNav
+            user={loginUser}
+            onChangePassword={() => {}}
+            onLogout={() => setLoginUser(null)}
+          />
         ) : (
           <Link to="/login">로그인</Link>
         )}
@@ -43,14 +51,9 @@ const Container = styled("header", {
   boxShadow: `0 1px 2px 0px ${grey.primary}`,
 });
 
-const LeftSide = styled("div", {});
-const RightSide = styled("div", {});
+const LeftSide = styled(Space, {});
+const RightSide = styled(Space, {});
 
-const Nav = () => {
-  return (
-    <Space>
-      <Link to="contracts">Contracts</Link>
-      <Link to="contracts/new">계약 생성</Link>
-    </Space>
-  );
+const Navigation = ({ children }: { children: ReactNode }) => {
+  return <Space>{children}</Space>;
 };

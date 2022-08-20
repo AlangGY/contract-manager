@@ -1,5 +1,5 @@
 import { HEADER_HEIGHT } from "@constants/styles.constant";
-import Header from "@domain/header/Header";
+import Header from "@domain/header/components/Header";
 import { styled } from "@stitches/react";
 import MainLayout from "./MainLayout";
 

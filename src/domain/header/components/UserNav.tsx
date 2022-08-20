@@ -6,16 +6,17 @@ import "antd/dist/antd.css";
 
 interface Props {
   user: User;
+  onChangePassword?: () => void;
   onLogout?: () => void;
 }
 
-export default function UserNav({ user, onLogout }: Props) {
+export default function UserNav({ user, onChangePassword, onLogout }: Props) {
   return (
     <Dropdown
       getPopupContainer={() => document.querySelector("#root") || document.body}
       overlay={
         <Menu>
-          <Menu.Item>
+          <Menu.Item onClick={onChangePassword}>
             <Typography.Text>비밀번호 변경하기</Typography.Text>
           </Menu.Item>
           <Menu.Divider />
