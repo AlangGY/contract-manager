@@ -1,7 +1,8 @@
+import ContractAPI from "@api/contract.api";
 import Button from "@base/Button";
 import Input from "@base/Input";
 import { styled } from "@stitches/react";
-import { Calendar, Divider, Space, Typography } from "antd";
+import { Divider, Space, Typography } from "antd";
 import React, { FormEventHandler, useState } from "react";
 
 interface Props {
@@ -61,8 +62,10 @@ function ContractCompanyInput({ value, onChange }: CompanyInputProps) {
   };
 
   const handleValidate = async () => {
-    setIsValidated(true);
-    setError("이미 계약된 회사입니다.");
+    ContractAPI.getContractByCompanyName(value).then((contract) => {
+      setIsValidated(contract.length === 0);
+      setError(contract.length > 0 ? "이미 계약된 회사입니다" : null);
+    });
   };
 
   return (
@@ -88,14 +91,18 @@ function ContractCompanyInput({ value, onChange }: CompanyInputProps) {
 }
 
 interface DateSelectProps {
-  onSelect?: (date: Date) => void;
+  onSelect?: (date: Date | null) => void;
 }
 
 function ContractDateSelect({ onSelect }: DateSelectProps) {
   return (
     <ContractDateContainer>
       <Typography.Title level={5}>계약 일자</Typography.Title>
-      <Calendar fullscreen={false} onSelect={(e) => onSelect?.(e.toDate())} />
+      <input
+        type="date"
+        onChange={(e) => onSelect?.(e.target.valueAsDate as Date)}
+      />
+      {/* <Calendar fullscreen={false} onSelect={(e) => onSelect?.(e.toDate())} /> */}
     </ContractDateContainer>
   );
 }

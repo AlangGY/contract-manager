@@ -15,3 +15,10 @@ export interface Contract {
   contractor: User;
   date: Date;
 }
+
+export interface ContractRemote {
+  id: string;
+  company: Company;
+  contractor: User;
+  timestamp: number;
+}

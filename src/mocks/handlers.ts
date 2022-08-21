@@ -1,9 +1,37 @@
+import { ContractRemote } from "@models/types";
 import { rest } from "msw";
-import contractsMock from "./__mocks__/contracts.json";
+import { addContract, getContractsDB } from "./mockDB";
 import usersMock from "./__mocks__/users.json";
+
 export const handlers = [
   rest.get("/contract", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(contractsMock));
+    const keyword = req.url.searchParams.get("keyword");
+    if (keyword) {
+      return res(
+        ctx.status(200),
+        ctx.json(
+          getContractsDB().filter(
+            (contract) =>
+              contract.company.name.replaceAll(" ", "").toLowerCase() ===
+              keyword.replaceAll(" ", "").toLowerCase()
+          )
+        )
+      );
+    }
+
+    return res(ctx.status(200), ctx.json(getContractsDB()));
+  }),
+
+  rest.post("/contract", async (req, res, ctx) => {
+    const body: ContractRemote = await req.json();
+    addContract({
+      id: `${getContractsDB().length + 1}`,
+      company: body.company,
+      contractor: body.contractor,
+      timestamp: body.timestamp,
+    });
+
+    return res(ctx.status(200), ctx.text("success"));
   }),
 
   rest.get("/user", (req, res, ctx) => {

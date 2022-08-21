@@ -8,6 +8,7 @@
       "@models/*": ["src/models/*"],
       "@constants/*": ["src/constants/*"],
       "@store/*": ["src/store/*"],
+      "@util/*": ["src/util/*"],
       "@src/*": ["src/*"]
     },
     "target": "es5",

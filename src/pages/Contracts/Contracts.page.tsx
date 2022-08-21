@@ -1,13 +1,17 @@
+import ContractAPI from "@api/contract.api";
 import Button from "@base/Button";
 import Modal from "@base/Modal";
 import { ContractList } from "@domain/contracts/components/Contract.view";
 import ContractForm from "@domain/contracts/components/ContractForm";
 import useContracts from "@domain/contracts/hooks/use-contracts.hook";
 import useModalContext from "@src/hooks/use-modalContext.hooks";
+import { loginUserAtom } from "@store/atoms/userAtom";
 import { Space, Typography } from "antd";
+import { useAtom } from "jotai";
 
 export default function Contracts() {
-  const [contracts] = useContracts();
+  const [contracts, fetchContracts] = useContracts();
+  const [loginUser] = useAtom(loginUserAtom);
   const { isVisible, openModal, closeModal } = useModalContext();
 
   return (
@@ -25,9 +29,14 @@ export default function Contracts() {
       <Modal withDim visible={isVisible} onClickAway={closeModal}>
         <Space>
           <ContractForm
-            onSubmit={async (company, date) => {
-              console.log(company);
-              console.log(date);
+            onSubmit={async (companyName, date) => {
+              if (!loginUser) return;
+              await ContractAPI.postContract({
+                company: { name: companyName },
+                contractor: loginUser,
+                date,
+              });
+              fetchContracts();
               closeModal();
             }}
           />
