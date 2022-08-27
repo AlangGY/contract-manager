@@ -15,15 +15,13 @@ export default function UserNav({ user, onChangePassword, onLogout }: Props) {
     <Dropdown
       getPopupContainer={() => document.querySelector("#root") || document.body}
       overlay={
-        <Menu>
-          <Menu.Item onClick={onChangePassword}>
-            <Typography.Text>비밀번호 변경하기</Typography.Text>
-          </Menu.Item>
-          <Menu.Divider />
-          <Menu.Item onClick={onLogout}>
-            <Typography.Text type="danger">로그아웃</Typography.Text>
-          </Menu.Item>
-        </Menu>
+        <Menu
+          items={[
+            { label: "비밀번호 변경하기", key: "0", onClick: onChangePassword },
+            { type: "divider" },
+            { label: "로그아웃", key: "1", danger: true, onClick: onLogout },
+          ]}
+        />
       }
       trigger={["hover"]}
     >
