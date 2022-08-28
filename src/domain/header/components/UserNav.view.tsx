@@ -27,7 +27,9 @@ export default function UserNav({ user, onChangePassword, onLogout }: Props) {
     >
       <Container>
         <Space>
-          <Typography.Text>{user.name}</Typography.Text>
+          <Typography.Text>
+            {user.isAdmin ? "👑" : ""} {user.name}
+          </Typography.Text>
           <DownOutlined />
         </Space>
       </Container>

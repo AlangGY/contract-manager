@@ -18,6 +18,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route element={<PageWithAuthLayout />}>
             <Route path="contracts" element={<Contracts />} />
+          </Route>
+        </Route>
+        <Route element={<PageWithHeaderLayout subHeader />}>
+          <Route element={<PageWithAuthLayout />}>
             <Route path="/admin" element={<Admin />}>
               <Route path="users" element={<AdminUsers />} />
               <Route path="contracts" element={<AdminContracts />} />

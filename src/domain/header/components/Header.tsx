@@ -1,4 +1,3 @@
-import { grey } from "@ant-design/colors";
 import { BODY_PADDING, HEADER_HEIGHT } from "@constants/styles.constant";
 import { styled } from "@stitches/react";
 import { loginUserAtom } from "@store/atoms/userAtom";
@@ -22,6 +21,7 @@ export default function Header() {
         </Navigation>
       </LeftSide>
       <RightSide>
+        {loginUser?.isAdmin && <Link to="admin">관리자 페이지로</Link>}
         {loginUser ? (
           <UserNav
             user={loginUser}
@@ -46,7 +46,7 @@ const Container = styled("header", {
   justifyContent: "space-between",
   alignItems: "center",
   backgroundColor: "white",
-  boxShadow: `0 1px 2px 0px ${grey.primary}`,
+  borderBottom: `1px solid rgb(240,240,240)`,
 });
 
 const LeftSide = styled(Space, {});

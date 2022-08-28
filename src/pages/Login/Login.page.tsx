@@ -20,7 +20,6 @@ export default function Login() {
       <LoginForm
         users={users}
         onSuccess={(user) => {
-          alert(JSON.stringify(user));
           handleLoginSuccess(user);
         }}
         onFail={(message) => alert(message)}

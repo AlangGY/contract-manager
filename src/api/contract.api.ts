@@ -7,16 +7,20 @@ interface ContractResponse extends Omit<Contract, "date"> {
 
 const getContracts = async (): Promise<Contract[]> => {
   try {
-    const response = await axios.get<ContractResponse[]>("/contract");
+    const response = await axios.get<ContractResponse[] | undefined>(
+      "/contract"
+    );
 
     if (!response.data) throw new Error("failed to fetch contract");
 
-    return response.data.map(({ id, company, contractor, timestamp }) => ({
-      id,
-      company,
-      contractor,
-      date: new Date(timestamp),
-    }));
+    return (
+      response.data?.map(({ id, company, contractor, timestamp }) => ({
+        id,
+        company,
+        contractor,
+        date: new Date(timestamp),
+      })) || []
+    );
   } catch (e) {
     return [];
   }
@@ -26,16 +30,18 @@ const getContractByCompanyName = async (
   companyName: string
 ): Promise<Contract[]> => {
   try {
-    const response = await axios.get<ContractResponse[]>(
+    const response = await axios.get<ContractResponse[] | undefined>(
       `/contract?keyword=${companyName}`
     );
 
-    return response.data.map(({ id, company, contractor, timestamp }) => ({
-      id,
-      company,
-      contractor,
-      date: new Date(timestamp),
-    }));
+    return (
+      response.data?.map(({ id, company, contractor, timestamp }) => ({
+        id,
+        company,
+        contractor,
+        date: new Date(timestamp),
+      })) || []
+    );
   } catch (e) {
     throw new Error("failed to get contract by keyword");
   }

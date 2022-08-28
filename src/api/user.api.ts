@@ -3,7 +3,7 @@ import axios from "axios";
 
 const getUsers = async () => {
   try {
-    return axios.get<User[]>("/user").then((res) => {
+    return axios.get<User[] | undefined>("/user").then((res) => {
       if (!res.data) throw new Error("failed to fetch users");
       return res.data;
     });
