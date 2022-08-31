@@ -1,3 +1,4 @@
+import { API_ENDPOINT } from "@constants/api.constant";
 import { ContractRemote } from "@models/types";
 import { rest } from "msw";
 import {
@@ -9,7 +10,7 @@ import {
 } from "./mockDB";
 
 export const handlers = [
-  rest.get("/contract", (req, res, ctx) => {
+  rest.get(`${API_ENDPOINT}/contract`, (req, res, ctx) => {
     const keyword = req.url.searchParams.get("keyword");
     if (keyword) {
       return res(
@@ -27,7 +28,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(getContractsDB()));
   }),
 
-  rest.post("/contract", async (req, res, ctx) => {
+  rest.post(`${API_ENDPOINT}/contract`, async (req, res, ctx) => {
     const body: ContractRemote = await req.json();
     addContract({
       id: `${getContractsDB().length + 1}`,
@@ -39,11 +40,11 @@ export const handlers = [
     return res(ctx.status(200), ctx.text("success"));
   }),
 
-  rest.get("/user", (req, res, ctx) => {
+  rest.get(`${API_ENDPOINT}/user`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(getUsersDB()));
   }),
 
-  rest.post("/login", async (req, res, ctx) => {
+  rest.post(`${API_ENDPOINT}/login`, async (req, res, ctx) => {
     const { userName, password } = await req.json();
 
     const users = getUsersDB();
@@ -59,7 +60,7 @@ export const handlers = [
     return res(ctx.delay(1000), ctx.status(200), ctx.json(loginUser));
   }),
 
-  rest.post("/admin/user", async (req, res, ctx) => {
+  rest.post(`${API_ENDPOINT}/admin/user`, async (req, res, ctx) => {
     const { id } = await req.json();
     if (!id) return res(ctx.delay(1000), ctx.status(400, "no id received"));
 
@@ -76,7 +77,7 @@ export const handlers = [
     );
   }),
 
-  rest.delete("/admin/user", async (req, res, ctx) => {
+  rest.delete(`${API_ENDPOINT}/admin/user`, async (req, res, ctx) => {
     const id = req.url.searchParams.get("id");
     if (!id || !getUsersDB().some((user) => user.id === id)) {
       return res(
@@ -94,7 +95,7 @@ export const handlers = [
     );
   }),
 
-  rest.patch("/admin/user/password", async (req, res, ctx) => {
+  rest.patch(`${API_ENDPOINT}/admin/user/password`, async (req, res, ctx) => {
     const { userId, password } = await req.json();
     const users = getUsersDB();
     const targetUser = users.find((user) => user.name === userId);

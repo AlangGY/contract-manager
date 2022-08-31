@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Contract, ContractRemote } from "@models/types";
+import { API_ENDPOINT } from "@constants/api.constant";
 
 interface ContractResponse extends Omit<Contract, "date"> {
   timestamp: number;
@@ -8,7 +9,7 @@ interface ContractResponse extends Omit<Contract, "date"> {
 const getContracts = async (): Promise<Contract[]> => {
   try {
     const response = await axios.get<ContractResponse[] | undefined>(
-      "/contract"
+      `${API_ENDPOINT}/contract`
     );
 
     if (!response.data) throw new Error("failed to fetch contract");
@@ -31,7 +32,7 @@ const getContractByCompanyName = async (
 ): Promise<Contract[]> => {
   try {
     const response = await axios.get<ContractResponse[] | undefined>(
-      `/contract?keyword=${companyName}`
+      `${API_ENDPOINT}/contract?keyword=${companyName}`
     );
 
     return (
@@ -55,7 +56,7 @@ const postContract = async (
       string,
       AxiosResponse<string, any>,
       Omit<ContractRemote, "id">
-    >("/contract", {
+    >(`${API_ENDPOINT}/contract`, {
       company: contract.company,
       contractor: contract.contractor,
       timestamp: contract.date.getTime(),
