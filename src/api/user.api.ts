@@ -17,13 +17,13 @@ const getUsers = async () => {
   }
 };
 
-const login = async (userName: string, password: string) => {
-  if (!userName || !password) throw new Error("failed to login");
+const login = async (id: string, password: string) => {
+  if (!id || !password) throw new Error("failed to login");
 
   return axios
     .post<User>(
-      `${API_ENDPOINT}/login`,
-      { userName, password },
+      `${API_ENDPOINT}/user/login`,
+      { id, password },
       { withCredentials: true }
     )
     .then((res) => {
