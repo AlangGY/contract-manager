@@ -18,7 +18,7 @@ export const handlers = [
         ctx.json(
           getContractsDB().filter(
             (contract) =>
-              contract.company.name.replaceAll(" ", "").toLowerCase() ===
+              contract.company.replaceAll(" ", "").toLowerCase() ===
               keyword.replaceAll(" ", "").toLowerCase()
           )
         )
@@ -41,19 +41,19 @@ export const handlers = [
   }),
 
   rest.get(`${API_ENDPOINT}/user`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(getUsersDB()));
+    return res(ctx.status(200), ctx.json({ users: getUsersDB() }));
   }),
 
   rest.post(`${API_ENDPOINT}/login`, async (req, res, ctx) => {
     const { userName, password } = await req.json();
 
     const users = getUsersDB();
-    const loginUser = users.find((user) => user.name === userName);
+    const loginUser = users.find((user) => user.id === userName);
 
     if (!loginUser) {
       return res(ctx.delay(1000), ctx.status(400, "failed to login"));
     }
-    if (loginUser.password !== password) {
+    if (loginUser.pw !== password) {
       return res(ctx.delay(1000), ctx.status(400, "failed to login"));
     }
 
@@ -69,7 +69,7 @@ export const handlers = [
       return res(ctx.delay(1000), ctx.status(400, "userId exists"));
     }
 
-    addUser({ id: id, name: id, isAdmin: false, password: "0000" });
+    addUser({ id: id, admin: false, pw: "0000" });
     return res(
       ctx.delay(1000),
       ctx.status(200),
@@ -96,9 +96,9 @@ export const handlers = [
   }),
 
   rest.patch(`${API_ENDPOINT}/admin/user/password`, async (req, res, ctx) => {
-    const { userId, password } = await req.json();
+    const { userId, password: pw } = await req.json();
     const users = getUsersDB();
-    const targetUser = users.find((user) => user.name === userId);
+    const targetUser = users.find((user) => user.id === userId);
     if (!targetUser) {
       return res(
         ctx.delay(1000),
@@ -108,7 +108,7 @@ export const handlers = [
     }
 
     removeUserById(targetUser.id);
-    addUser({ ...targetUser, password });
+    addUser({ ...targetUser, pw });
 
     return res(
       ctx.delay(1000),

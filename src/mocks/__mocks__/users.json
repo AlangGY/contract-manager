@@ -1,44 +1,37 @@
 [
   {
     "id": "1",
-    "name": "Alang Kim",
-    "isAdmin": true,
-    "password": "0000"
+    "admin": true,
+    "pw": "0000"
   },
   {
     "id": "2",
-    "name": "Mooho Kim",
-    "isAdmin": false,
-    "password": "0000"
+    "admin": false,
+    "pw": "0000"
   },
   {
     "id": "3",
-    "name": "전제우",
-    "isAdmin": false,
-    "password": "0000"
+    "admin": false,
+    "pw": "0000"
   },
   {
     "id": "4",
-    "name": "박수홍",
-    "isAdmin": false,
-    "password": "0000"
+    "admin": false,
+    "pw": "0000"
   },
   {
     "id": "5",
-    "name": "마고",
-    "isAdmin": false,
-    "password": "0000"
+    "admin": false,
+    "pw": "0000"
   },
   {
     "id": "6",
-    "name": "사원 1",
-    "isAdmin": false,
-    "password": "0000"
+    "admin": false,
+    "pw": "0000"
   },
   {
     "id": "7",
-    "name": "사원 2",
-    "isAdmin": false,
-    "password": "0000"
+    "admin": false,
+    "pw": "0000"
   }
 ]

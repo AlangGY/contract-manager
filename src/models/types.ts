@@ -1,24 +1,20 @@
-export interface Company {
-  name: string;
-}
-
+export type Company = string;
 export interface User {
   id: string;
-  name: string;
-  password: string;
-  isAdmin: boolean;
+  pw: string;
+  admin: boolean;
 }
 
 export interface Contract {
   id: string;
-  company: Company;
+  company: string;
   contractor: User;
   date: Date;
 }
 
 export interface ContractRemote {
   id: string;
-  company: Company;
+  company: string;
   contractor: User;
-  timestamp: number;
+  timestamp: string;
 }

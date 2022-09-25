@@ -16,9 +16,8 @@ function App() {
       <Routes>
         <Route element={<PageWithHeaderLayout />}>
           <Route path="/" element={<Home />} />
-          <Route element={<PageWithAuthLayout />}>
-            <Route path="contracts" element={<Contracts />} />
-          </Route>
+          <Route path="contracts" element={<Contracts />} />
+          <Route element={<PageWithAuthLayout />}></Route>
         </Route>
         <Route element={<PageWithHeaderLayout subHeader />}>
           <Route element={<PageWithAuthLayout />}>

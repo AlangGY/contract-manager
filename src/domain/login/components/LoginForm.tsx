@@ -25,7 +25,7 @@ export default function LoginForm({ users, onSuccess, onFail }: Props) {
     setIsLoading(true);
     await UserAPI.login(selectedUser, password)
       .then((user) => {
-        onSuccess?.({ ...user, password });
+        onSuccess?.({ ...user, pw: password });
       })
       .catch(() => {
         onFail?.("failed to login");

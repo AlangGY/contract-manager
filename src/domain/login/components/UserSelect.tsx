@@ -7,6 +7,7 @@ interface UserListProps {
 }
 
 export default function UserSelect({ users, onSelect }: UserListProps) {
+  console.log(users);
   const handleChange = (e: ChangeEvent) => {
     if (!(e.target instanceof HTMLInputElement)) return;
 
@@ -24,15 +25,14 @@ export default function UserSelect({ users, onSelect }: UserListProps) {
 
 const UserOption = ({
   id,
-  name,
-  isAdmin,
+  admin,
   onChange,
 }: User & { onChange?: (e: React.ChangeEvent) => void }) => {
   return (
     <li>
       <label>
-        <input onChange={onChange} name="user" type="radio" value={name} />
-        {name}
+        <input onChange={onChange} name="user" type="radio" value={id} />
+        {id}
       </label>
     </li>
   );

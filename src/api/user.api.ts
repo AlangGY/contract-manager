@@ -5,12 +5,12 @@ import axios from "axios";
 const getUsers = async () => {
   try {
     return axios
-      .get<User[] | undefined>(`${API_ENDPOINT}/user`, {
+      .get<{ users: User[] } | undefined>(`${API_ENDPOINT}/user`, {
         withCredentials: true,
       })
       .then((res) => {
         if (!res.data) throw new Error("failed to fetch users");
-        return res.data;
+        return res.data.users;
       });
   } catch (e) {
     return [];
@@ -21,7 +21,11 @@ const login = async (userName: string, password: string) => {
   if (!userName || !password) throw new Error("failed to login");
 
   return axios
-    .post<User>(`${API_ENDPOINT}/login`, { userName, password })
+    .post<User>(
+      `${API_ENDPOINT}/login`,
+      { userName, password },
+      { withCredentials: true }
+    )
     .then((res) => {
       if (!res.data) throw new Error("failed to login");
       return res.data;

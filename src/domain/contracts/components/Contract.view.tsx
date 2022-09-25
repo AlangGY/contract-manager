@@ -9,8 +9,8 @@ export const ContractItem = ({ company, contractor, date }: Contract) => {
 
   return (
     <tr>
-      <Td style={{ width: "30%" }}>{company.name}</Td>
-      <Td>{contractor.name}</Td>
+      <Td style={{ width: "30%" }}>{company}</Td>
+      <Td>{contractor?.id}</Td>
       <Td>
         <Space>
           <Typography.Text>{date.toLocaleDateString()}</Typography.Text>

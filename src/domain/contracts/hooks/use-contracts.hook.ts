@@ -1,6 +1,6 @@
 import ContractAPI from "@api/contract.api";
 import { Contract } from "@models/types";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function useContracts(): [Contract[], () => void] {
   const [contracts, setContracts] = useState<Contract[]>([]);
@@ -10,10 +10,6 @@ export default function useContracts(): [Contract[], () => void] {
       setContracts(contracts);
     });
   }, []);
-
-  useEffect(() => {
-    fetchContracts();
-  }, [fetchContracts]);
 
   return [contracts, fetchContracts];
 }

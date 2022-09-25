@@ -62,7 +62,7 @@ function ContractCompanyInput({ value, onChange }: CompanyInputProps) {
   };
 
   const handleValidate = async () => {
-    ContractAPI.getContractByCompanyName(value).then((contract) => {
+    ContractAPI.getContractByCompanyName(value, true).then((contract) => {
       setIsValidated(contract.length === 0);
       setError(contract.length > 0 ? "이미 계약된 회사입니다" : null);
     });

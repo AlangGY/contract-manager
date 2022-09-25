@@ -8,11 +8,20 @@ import useModalContext from "@src/hooks/use-modalContext.hooks";
 import { loginUserAtom } from "@store/atoms/userAtom";
 import { Space, Typography } from "antd";
 import { useAtom } from "jotai";
+import { useEffect } from "react";
 
 export default function Contracts() {
   const [contracts, fetchContracts] = useContracts();
   const [loginUser] = useAtom(loginUserAtom);
   const { isVisible, openModal, closeModal } = useModalContext();
+
+  useEffect(() => {
+    loginUser && fetchContracts();
+  }, [loginUser, fetchContracts]);
+
+  if (!loginUser) {
+    return null;
+  }
 
   return (
     <>
@@ -30,10 +39,9 @@ export default function Contracts() {
         <Space>
           <ContractForm
             onSubmit={async (companyName, date) => {
-              if (!loginUser) return;
               await ContractAPI.postContract({
-                company: { name: companyName },
-                contractor: loginUser,
+                company: companyName,
+                contractor: loginUser.id,
                 date,
               });
               fetchContracts();
