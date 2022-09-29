@@ -7,7 +7,6 @@ interface UserListProps {
 }
 
 export default function UserSelect({ users, onSelect }: UserListProps) {
-  console.log(users);
   const handleChange = (e: ChangeEvent) => {
     if (!(e.target instanceof HTMLInputElement)) return;
 
@@ -25,7 +24,7 @@ export default function UserSelect({ users, onSelect }: UserListProps) {
 
 const UserOption = ({
   id,
-  admin,
+  isAdmin: admin,
   onChange,
 }: User & { onChange?: (e: React.ChangeEvent) => void }) => {
   return (

@@ -4,16 +4,20 @@ import Input from "@base/Input";
 import ScrollContainer from "@base/ScrollContainer";
 import UserSelect from "@domain/login/components/UserSelect";
 import useUsers from "@domain/login/hooks/use-user.hook";
+import { authorizationTokenAtom } from "@store/atoms/userAtom";
 import { Space } from "antd";
+import { useAtom } from "jotai";
 import { useState } from "react";
 import UserRegistration from "./components/UserRegistration";
 
 export default function AdminUsers() {
   const [users, fetchUsers] = useUsers();
   const [selectedUserId, setSelectedUserId] = useState<string>();
+  const [authorizationToken] = useAtom(authorizationTokenAtom);
 
   const handleRegister = async (id: string) => {
-    const isSuccess = await AdminAPI.addUser(id);
+    const isSuccess =
+      authorizationToken && (await AdminAPI.addUser(id, authorizationToken));
     isSuccess && fetchUsers();
   };
 
@@ -21,9 +25,14 @@ export default function AdminUsers() {
   const [isChangePasswordLoading, setIsChangePasswordLoading] = useState(false);
   const handleChangePassword = async () => {
     setIsChangePasswordLoading(true);
-    selectedUserId &&
+    authorizationToken &&
+      selectedUserId &&
       password &&
-      (await AdminAPI.changePassword(selectedUserId, password));
+      (await AdminAPI.changePassword(
+        selectedUserId,
+        password,
+        authorizationToken
+      ));
 
     setIsChangePasswordLoading(false);
   };
@@ -32,7 +41,9 @@ export default function AdminUsers() {
   const handleDeleteUser = async () => {
     setIsDeleteLoading(true);
     const isSuccess =
-      selectedUserId && (await AdminAPI.removeUser(selectedUserId));
+      authorizationToken &&
+      selectedUserId &&
+      (await AdminAPI.removeUser(selectedUserId, authorizationToken));
     isSuccess && fetchUsers();
     setIsDeleteLoading(false);
   };

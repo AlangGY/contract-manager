@@ -69,7 +69,7 @@ export const handlers = [
       return res(ctx.delay(1000), ctx.status(400, "userId exists"));
     }
 
-    addUser({ id: id, admin: false, pw: "0000" });
+    addUser({ id: id, isAdmin: false, pw: "0000" });
     return res(
       ctx.delay(1000),
       ctx.status(200),

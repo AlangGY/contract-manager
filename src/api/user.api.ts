@@ -17,18 +17,18 @@ const getUsers = async () => {
   }
 };
 
-const login = async (id: string, password: string) => {
-  if (!id || !password) throw new Error("failed to login");
+const login = async (id: string, password: string): Promise<string> => {
+  if (!id) throw new Error("failed to login");
 
   return axios
-    .post<User>(
+    .post<{ authentication: string; message: string }>(
       `${API_ENDPOINT}/user/login`,
       { id, password },
       { withCredentials: true }
     )
     .then((res) => {
       if (!res.data) throw new Error("failed to login");
-      return res.data;
+      return res.data.authentication;
     });
 };
 

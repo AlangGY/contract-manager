@@ -1,37 +1,37 @@
 [
   {
     "id": "1",
-    "admin": true,
+    "isAdmin": true,
     "pw": "0000"
   },
   {
     "id": "2",
-    "admin": false,
+    "isAdmin": false,
     "pw": "0000"
   },
   {
     "id": "3",
-    "admin": false,
+    "isAdmin": false,
     "pw": "0000"
   },
   {
     "id": "4",
-    "admin": false,
+    "isAdmin": false,
     "pw": "0000"
   },
   {
     "id": "5",
-    "admin": false,
+    "isAdmin": false,
     "pw": "0000"
   },
   {
     "id": "6",
-    "admin": false,
+    "isAdmin": false,
     "pw": "0000"
   },
   {
     "id": "7",
-    "admin": false,
+    "isAdmin": false,
     "pw": "0000"
   }
 ]

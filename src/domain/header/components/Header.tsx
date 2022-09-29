@@ -21,7 +21,7 @@ export default function Header() {
         </Navigation>
       </LeftSide>
       <RightSide>
-        {loginUser?.admin && <Link to="admin">관리자 페이지로</Link>}
+        {loginUser?.isAdmin && <Link to="admin">관리자 페이지로</Link>}
         {loginUser ? (
           <UserNav
             user={loginUser}

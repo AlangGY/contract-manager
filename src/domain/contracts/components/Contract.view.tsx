@@ -1,10 +1,21 @@
 import { blue, red } from "@ant-design/colors";
+import Button from "@base/Button";
 import { Table, Td, Th, THead } from "@base/Table";
-import { Contract } from "@models/types";
+import { Contract, User } from "@models/types";
 import { dayDiff } from "@util/date.util";
 import { Space, Typography } from "antd";
 
-export const ContractItem = ({ company, contractor, date }: Contract) => {
+export const ContractItem = ({
+  id,
+  company,
+  contractor,
+  date,
+  isRemovable,
+  onRemove,
+}: Contract & {
+  isRemovable?: boolean;
+  onRemove?: (contractId: string) => void;
+}) => {
   const timePassed = dayDiff(new Date(), date);
 
   return (
@@ -19,6 +30,9 @@ export const ContractItem = ({ company, contractor, date }: Contract) => {
           >
             D{timePassed >= 0 ? "+" : ""}
             {timePassed}
+            {isRemovable && (
+              <Button onClick={() => onRemove?.(id)}>삭제</Button>
+            )}
           </Typography.Text>
         </Space>
       </Td>
@@ -28,9 +42,16 @@ export const ContractItem = ({ company, contractor, date }: Contract) => {
 
 interface ContractListProps {
   contracts?: Contract[];
+  contractor?: Omit<User, "pw">;
+  onRemove?: (id: string) => void;
 }
 
-export const ContractList = ({ contracts }: ContractListProps) => {
+export const ContractList = ({
+  contracts,
+  contractor,
+  onRemove,
+}: ContractListProps) => {
+  console.log(contracts, contractor);
   return (
     <Table>
       <THead>
@@ -43,7 +64,12 @@ export const ContractList = ({ contracts }: ContractListProps) => {
       <tbody>
         {contracts &&
           contracts.map((contract) => (
-            <ContractItem key={contract.id} {...contract} />
+            <ContractItem
+              key={contract.id}
+              {...contract}
+              isRemovable={contract.contractor.id === contractor?.id}
+              onRemove={onRemove}
+            />
           ))}
       </tbody>
     </Table>

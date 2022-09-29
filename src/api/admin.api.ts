@@ -1,12 +1,17 @@
 import { API_ENDPOINT } from "@constants/api.constant";
 import axios from "axios";
 
-const addUser = async (id: string): Promise<boolean> => {
+const addUser = async (id: string, token: string): Promise<boolean> => {
   try {
     const response = await axios.post(
       `${API_ENDPOINT}/admin/user`,
-      { id },
-      { withCredentials: true }
+      { id, password: "0000" },
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: token,
+        },
+      }
     );
     if (!response.data) throw new Error("failed to add User");
 
@@ -17,10 +22,13 @@ const addUser = async (id: string): Promise<boolean> => {
   }
 };
 
-const removeUser = async (id: string): Promise<boolean> => {
+const removeUser = async (id: string, token: string): Promise<boolean> => {
   try {
     const response = await axios.delete(`${API_ENDPOINT}/admin/user?id=${id}`, {
       withCredentials: true,
+      headers: {
+        Authorization: token,
+      },
     });
     if (!response.data || response.status !== 200)
       throw new Error("failed to remove User");
@@ -34,16 +42,22 @@ const removeUser = async (id: string): Promise<boolean> => {
 
 const changePassword = async (
   id: string,
-  password: string
+  password: string,
+  token: string
 ): Promise<boolean> => {
   try {
     const response = await axios.patch(
       `${API_ENDPOINT}/admin/user/password`,
       {
-        userId: id,
+        id,
         password,
       },
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: token,
+        },
+      }
     );
     if (!response.data || response.status !== 200)
       throw new Error("failed to change password");

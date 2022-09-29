@@ -9,7 +9,7 @@ import Button from "@base/Button";
 
 interface Props {
   users: User[];
-  onSuccess?: (user: User) => void;
+  onSuccess?: (userId: string, token: string) => void;
   onFail?: (errorMessage: string) => void;
 }
 
@@ -20,12 +20,12 @@ export default function LoginForm({ users, onSuccess, onFail }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedUser || !password) return;
+    if (!selectedUser) return;
 
     setIsLoading(true);
     await UserAPI.login(selectedUser, password)
-      .then((user) => {
-        onSuccess?.({ ...user, pw: password });
+      .then((token) => {
+        onSuccess?.(selectedUser, token);
       })
       .catch(() => {
         onFail?.("failed to login");

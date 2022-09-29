@@ -2,7 +2,7 @@ export type Company = string;
 export interface User {
   id: string;
   pw: string;
-  admin: boolean;
+  isAdmin: boolean;
 }
 
 export interface Contract {

@@ -5,7 +5,7 @@ import { Dropdown, Menu, Space, Typography } from "antd";
 import "antd/dist/antd.css";
 
 interface Props {
-  user: User;
+  user: Omit<User, "pw">;
   onChangePassword?: () => void;
   onLogout?: () => void;
 }
@@ -28,7 +28,7 @@ export default function UserNav({ user, onChangePassword, onLogout }: Props) {
       <Container>
         <Space>
           <Typography.Text>
-            {user.admin ? "👑" : ""} {user.id}
+            {user.isAdmin ? "👑" : ""} {user.id}
           </Typography.Text>
           <DownOutlined />
         </Space>

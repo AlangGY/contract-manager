@@ -1,17 +1,21 @@
 import LoginForm from "@domain/login/components/LoginForm";
 import useUsers from "@domain/login/hooks/use-user.hook";
-import { loginUserAtom } from "@store/atoms/userAtom";
+import { authorizationTokenAtom, loginUserAtom } from "@store/atoms/userAtom";
 import { styled } from "@stitches/react";
 import { useAtom } from "jotai";
-import { User } from "@models/types";
 import { Navigate } from "react-router-dom";
 
 export default function Login() {
   const [users] = useUsers();
   const [loginUser, setLoginUser] = useAtom(loginUserAtom);
+  const [, setAuthorizationToken] = useAtom(authorizationTokenAtom);
 
-  const handleLoginSuccess = (user: User) => {
-    setLoginUser(user);
+  const handleLoginSuccess = (userId: string, token: string) => {
+    setLoginUser({
+      id: userId,
+      isAdmin: !!users.find((user) => user.id === userId)?.isAdmin,
+    });
+    setAuthorizationToken(token);
   };
 
   return (
@@ -19,8 +23,8 @@ export default function Login() {
       {loginUser && <Navigate to="/" />}
       <LoginForm
         users={users}
-        onSuccess={(user) => {
-          handleLoginSuccess(user);
+        onSuccess={(userId, token) => {
+          handleLoginSuccess(userId, token);
         }}
         onFail={(message) => alert(message)}
       />

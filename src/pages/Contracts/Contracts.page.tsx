@@ -5,7 +5,7 @@ import { ContractList } from "@domain/contracts/components/Contract.view";
 import ContractForm from "@domain/contracts/components/ContractForm";
 import useContracts from "@domain/contracts/hooks/use-contracts.hook";
 import useModalContext from "@src/hooks/use-modalContext.hooks";
-import { loginUserAtom } from "@store/atoms/userAtom";
+import { authorizationTokenAtom, loginUserAtom } from "@store/atoms/userAtom";
 import { Space, Typography } from "antd";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
@@ -13,15 +13,25 @@ import { useEffect } from "react";
 export default function Contracts() {
   const [contracts, fetchContracts] = useContracts();
   const [loginUser] = useAtom(loginUserAtom);
+  const [authorizationToken] = useAtom(authorizationTokenAtom);
   const { isVisible, openModal, closeModal } = useModalContext();
 
+  console.log(authorizationToken);
+
   useEffect(() => {
-    loginUser && fetchContracts();
-  }, [loginUser, fetchContracts]);
+    authorizationToken && fetchContracts(authorizationToken);
+  }, [authorizationToken, fetchContracts]);
 
   if (!loginUser) {
     return null;
   }
+
+  const handleRemoveContract = (id: string) => {
+    authorizationToken &&
+      ContractAPI.deleteContract(id, authorizationToken).then((res) =>
+        fetchContracts(authorizationToken)
+      );
+  };
 
   return (
     <>
@@ -34,17 +44,25 @@ export default function Contracts() {
         </Typography.Title>
         <Button onClick={openModal}>새로운 계약 등록하기</Button>
       </Space>
-      <ContractList contracts={contracts} />
+      <ContractList
+        contracts={contracts}
+        contractor={loginUser}
+        onRemove={handleRemoveContract}
+      />
       <Modal withDim visible={isVisible} onClickAway={closeModal}>
         <Space>
           <ContractForm
             onSubmit={async (companyName, date) => {
-              await ContractAPI.postContract({
-                company: companyName,
-                contractor: loginUser.id,
-                date,
-              });
-              fetchContracts();
+              authorizationToken &&
+                (await ContractAPI.postContract(
+                  {
+                    company: companyName,
+                    contractor: loginUser.id,
+                    date,
+                  },
+                  authorizationToken
+                ));
+              authorizationToken && fetchContracts(authorizationToken);
               closeModal();
             }}
           />

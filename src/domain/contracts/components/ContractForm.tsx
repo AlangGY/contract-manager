@@ -2,7 +2,9 @@ import ContractAPI from "@api/contract.api";
 import Button from "@base/Button";
 import Input from "@base/Input";
 import { styled } from "@stitches/react";
+import { authorizationTokenAtom } from "@store/atoms/userAtom";
 import { Divider, Space, Typography } from "antd";
+import { useAtom } from "jotai";
 import React, { FormEventHandler, useState } from "react";
 
 interface Props {
@@ -53,6 +55,7 @@ interface CompanyInputProps {
 
 function ContractCompanyInput({ value, onChange }: CompanyInputProps) {
   const [isValidated, setIsValidated] = useState(false);
+  const [authorizationToken] = useAtom(authorizationTokenAtom);
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,10 +65,15 @@ function ContractCompanyInput({ value, onChange }: CompanyInputProps) {
   };
 
   const handleValidate = async () => {
-    ContractAPI.getContractByCompanyName(value, true).then((contract) => {
-      setIsValidated(contract.length === 0);
-      setError(contract.length > 0 ? "이미 계약된 회사입니다" : null);
-    });
+    authorizationToken &&
+      ContractAPI.getContractByCompanyName(
+        value,
+        authorizationToken,
+        true
+      ).then((contract) => {
+        setIsValidated(contract.length === 0);
+        setError(contract.length > 0 ? "이미 계약된 회사입니다" : null);
+      });
   };
 
   return (
