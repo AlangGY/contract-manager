@@ -15,7 +15,7 @@ export default function ContractForm({ onSubmit }: Props) {
   const [authorizationToken] = useAtom(authorizationTokenAtom);
 
   const [company, setCompany] = useState<string>("");
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useState<Date>(new Date());
   const [isValidated, setIsValidated] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,8 +41,6 @@ export default function ContractForm({ onSubmit }: Props) {
       });
   };
 
-  console.log(isValidated);
-
   return (
     <form onSubmit={handleSubmit}>
       <Space direction="vertical" style={{ padding: 20 }}>
@@ -58,7 +56,7 @@ export default function ContractForm({ onSubmit }: Props) {
           isValidated={isValidated}
         />
         <Divider />
-        <ContractDateSelect onSelect={setDate} />
+        <ContractDateSelect date={date} onSelect={setDate} />
         <Divider />
         <ButtonContainer>
           <Button disabled={!isSubmittable}>등록</Button>
@@ -123,15 +121,17 @@ function ContractCompanyInput({
 }
 
 interface DateSelectProps {
-  onSelect?: (date: Date | null) => void;
+  date: Date;
+  onSelect?: (date: Date) => void;
 }
 
-function ContractDateSelect({ onSelect }: DateSelectProps) {
+function ContractDateSelect({ date, onSelect }: DateSelectProps) {
   return (
     <ContractDateContainer>
       <Typography.Title level={5}>계약 일자</Typography.Title>
       <input
         type="date"
+        value={date.toISOString().split("T")[0]}
         onChange={(e) => onSelect?.(e.target.valueAsDate as Date)}
       />
       {/* <Calendar fullscreen={false} onSelect={(e) => onSelect?.(e.toDate())} /> */}

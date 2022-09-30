@@ -28,6 +28,9 @@ export default function UserRegistration({ onRegister }: Props) {
           </Space>
         </label>
         <Button disabled={!userId || isLoading}>등록</Button>
+        <Typography.Text>
+          (최초 등록시 비밀번호는 '0000'입니다.)
+        </Typography.Text>
       </Space>
     </form>
   );

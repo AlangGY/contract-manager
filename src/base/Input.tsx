@@ -1,3 +1,5 @@
+import { styled } from "@stitches/react";
+
 interface Props {
   type?: HTMLInputElement["type"];
   disabled?: boolean;
@@ -16,7 +18,7 @@ export default function Input({
   onInput,
 }: Props) {
   return (
-    <input
+    <StyledInput
       type={type}
       disabled={disabled}
       placeholder={placeholder}
@@ -26,3 +28,11 @@ export default function Input({
     />
   );
 }
+
+const StyledInput = styled("input", {
+  border: "1px solid rgba(149, 175, 192,1.0)",
+  borderRadius: "4px",
+  "&:focus": {
+    outline: "0.5px solid rgba(149, 175, 192,1.0)",
+  },
+});
