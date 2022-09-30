@@ -32,6 +32,7 @@ const UserOption = ({
       <label>
         <input onChange={onChange} name="user" type="radio" value={id} />
         {id}
+        {admin && " 👑"}
       </label>
     </li>
   );

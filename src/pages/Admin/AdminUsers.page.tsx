@@ -66,12 +66,14 @@ export default function AdminUsers() {
             />
           </label>
           <Button
+            colorType="check"
             disabled={!selectedUserId || isChangePasswordLoading}
             onClick={handleChangePassword}
           >
             비밀번호 변경
           </Button>
           <Button
+            colorType="alert"
             disabled={!selectedUserId || isDeleteLoading}
             onClick={handleDeleteUser}
           >

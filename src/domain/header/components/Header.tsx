@@ -17,7 +17,7 @@ export default function Header() {
           <Logo />
         </Link>
         <Navigation>
-          <Link to="contracts">Contracts</Link>
+          <Link to="contracts">계약 관리</Link>
         </Navigation>
       </LeftSide>
       <RightSide>
@@ -46,7 +46,7 @@ const Container = styled("header", {
   justifyContent: "space-between",
   alignItems: "center",
   backgroundColor: "white",
-  borderBottom: `1px solid rgb(240,240,240)`,
+  borderBottom: `1px solid rgba(149, 175, 192,.3)`,
 });
 
 const LeftSide = styled(Space, {});

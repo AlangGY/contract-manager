@@ -25,7 +25,7 @@ const globalStyles = globalCss({
     position: "relative",
   },
   a: {
-    color: blue.primary,
+    color: "rgba(104, 109, 224,1.0)",
     fontWeight: "600",
     textDecoration: "none",
     "&:hover": {

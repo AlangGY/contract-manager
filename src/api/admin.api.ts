@@ -69,10 +69,33 @@ const changePassword = async (
   }
 };
 
+const deleteContract = async (contractId: string, token: string) => {
+  try {
+    const response = await axios.delete(
+      `${API_ENDPOINT}/admin/contract?id=${contractId}`,
+      {
+        headers: {
+          Authorization: token,
+        },
+        withCredentials: true,
+      }
+    );
+
+    if (!response.data || response.status !== 200) {
+      throw new Error("failed to delete contract");
+    }
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
 const AdminAPI = {
   addUser,
   removeUser,
   changePassword,
+  deleteContract,
 };
 
 export default AdminAPI;

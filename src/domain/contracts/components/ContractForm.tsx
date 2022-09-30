@@ -12,27 +12,56 @@ interface Props {
 }
 
 export default function ContractForm({ onSubmit }: Props) {
+  const [authorizationToken] = useAtom(authorizationTokenAtom);
+
   const [company, setCompany] = useState<string>("");
   const [date, setDate] = useState<Date | null>(null);
+  const [isValidated, setIsValidated] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const isSubmittable = company && date && isValidated && !error;
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    if (!company || !date) return;
+    if (!isSubmittable) return;
     await onSubmit?.(company, date);
   };
+
+  const validateCompany = async (companyName: string) => {
+    authorizationToken &&
+      ContractAPI.getContractByCompanyName(
+        companyName,
+        authorizationToken,
+        true
+      ).then((contract) => {
+        setIsValidated(contract.length === 0);
+        contract.length > 0
+          ? setError("이미 계약된 회사입니다")
+          : setError(null);
+      });
+  };
+
+  console.log(isValidated);
 
   return (
     <form onSubmit={handleSubmit}>
       <Space direction="vertical" style={{ padding: 20 }}>
         <ContractCompanyInput
           value={company}
-          onChange={(value) => setCompany(value)}
+          error={error}
+          onChange={(value) => {
+            setError(null);
+            setCompany(value);
+            setIsValidated(false);
+          }}
+          onValidate={validateCompany}
+          isValidated={isValidated}
         />
         <Divider />
         <ContractDateSelect onSelect={setDate} />
         <Divider />
         <ButtonContainer>
-          <Button disabled={!company}>등록</Button>
+          <Button disabled={!isSubmittable}>등록</Button>
         </ButtonContainer>
       </Space>
     </form>
@@ -50,30 +79,21 @@ const ButtonContainer = styled("div", {
 
 interface CompanyInputProps {
   value: string;
+  error: string | null;
+  isValidated: boolean;
   onChange?: (value: string) => void;
+  onValidate?: (value: string) => void;
 }
 
-function ContractCompanyInput({ value, onChange }: CompanyInputProps) {
-  const [isValidated, setIsValidated] = useState(false);
-  const [authorizationToken] = useAtom(authorizationTokenAtom);
-  const [error, setError] = useState<string | null>(null);
-
+function ContractCompanyInput({
+  value,
+  error,
+  isValidated,
+  onChange,
+  onValidate,
+}: CompanyInputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsValidated(false);
-    setError(null);
     onChange?.(e.target.value);
-  };
-
-  const handleValidate = async () => {
-    authorizationToken &&
-      ContractAPI.getContractByCompanyName(
-        value,
-        authorizationToken,
-        true
-      ).then((contract) => {
-        setIsValidated(contract.length === 0);
-        setError(contract.length > 0 ? "이미 계약된 회사입니다" : null);
-      });
   };
 
   return (
@@ -82,7 +102,11 @@ function ContractCompanyInput({ value, onChange }: CompanyInputProps) {
         <Typography.Title level={5}>계약 회사</Typography.Title>
         <Space>
           <Input value={value} onChange={handleChange} />
-          <Button disabled={isValidated} onClick={handleValidate}>
+          <Button
+            colorType="check"
+            disabled={isValidated}
+            onClick={() => onValidate?.(value)}
+          >
             {isValidated ? "완료" : "계약 여부 확인"}
           </Button>
         </Space>
