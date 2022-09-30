@@ -57,7 +57,7 @@ const StyledButton = styled("button", {
         "&:disabled": {
           backgroundColor: "rgba(186, 220, 88,.3)",
         },
-        "&:hover::not(:disabled)": {
+        "&:hover:not(:disabled)": {
           backgroundColor: "rgba(186, 220, 88,.8)",
         },
       },
