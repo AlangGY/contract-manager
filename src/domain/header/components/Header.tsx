@@ -16,12 +16,10 @@ export default function Header() {
         <Link to="/">
           <Logo />
         </Link>
-        <Navigation>
-          <Link to="contracts">계약 관리</Link>
-        </Navigation>
+        <Link to="contracts">계약 관리</Link>
       </LeftSide>
       <RightSide>
-        {loginUser?.isAdmin && <Link to="admin">관리자 페이지로</Link>}
+        {loginUser?.isAdmin && <Link to="admin">관리자 페이지</Link>}
         {loginUser ? (
           <UserNav
             user={loginUser}
@@ -51,4 +49,3 @@ const Container = styled("header", {
 
 const LeftSide = styled(Space, {});
 const RightSide = styled(Space, {});
-const Navigation = styled(Space, {});

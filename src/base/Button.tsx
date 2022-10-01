@@ -33,8 +33,10 @@ const StyledButton = styled("button", {
   border: "none",
   borderRadius: "2px",
   color: "White",
+  padding: "5px 10px",
   backgroundColor: "rgba(126, 214, 223,1.0)",
   "&:disabled": {
+    cursor: "not-allowed",
     backgroundColor: "rgba(126, 214, 223,0.3)",
   },
   "&:hover:not(:disabled)": {
