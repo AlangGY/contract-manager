@@ -5,6 +5,9 @@ import { Table, Td, Th, THead } from "@base/Table";
 import { Contract, User } from "@models/types";
 import { dayDiff } from "@util/date.util";
 import { Space, Typography } from "antd";
+import { isAdminContract } from "../helper/contracts.helper";
+
+const MAX_TIME = 35;
 
 export const ContractItem = ({
   id,
@@ -22,7 +25,13 @@ export const ContractItem = ({
   const timePassed = dayDiff(new Date(), date);
 
   return (
-    <tr>
+    <tr
+      style={
+        isAdminContract({ id, company, contractor, date })
+          ? { backgroundColor: "rgba(223, 249, 251,1.0)" }
+          : {}
+      }
+    >
       <Td>
         <label>
           <div>
@@ -40,10 +49,12 @@ export const ContractItem = ({
         <Space>
           <Typography.Text>{date.toLocaleDateString()}</Typography.Text>
           <Typography.Text
-            style={{ color: timePassed >= 80 ? red.primary : blue.primary }}
+            style={{
+              color: timePassed >= MAX_TIME ? red.primary : blue.primary,
+            }}
           >
             D{timePassed >= 0 ? "+" : ""}
-            {timePassed}
+            {timePassed >= MAX_TIME ? `${timePassed}!` : timePassed}
           </Typography.Text>
         </Space>
       </Td>
