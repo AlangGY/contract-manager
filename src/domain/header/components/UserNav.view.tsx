@@ -17,8 +17,8 @@ export default function UserNav({ user, onChangePassword, onLogout }: Props) {
       overlay={
         <Menu
           items={[
-            { label: "비밀번호 변경하기", key: "0", onClick: onChangePassword },
-            { type: "divider" },
+            // { label: "비밀번호 변경하기", key: "0", onClick: onChangePassword },
+            // { type: "divider" },
             { label: "로그아웃", key: "1", danger: true, onClick: onLogout },
           ]}
         />

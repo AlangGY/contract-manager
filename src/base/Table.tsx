@@ -4,7 +4,7 @@ export const Table = styled("table", {
   width: "100%",
   borderCollapse: "collapse",
   boxSizing: "border-box",
-  "> td,th": {
+  "td,th": {
     padding: "5px",
   },
 });

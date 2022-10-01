@@ -134,7 +134,6 @@ function ContractDateSelect({ date, onSelect }: DateSelectProps) {
         value={date.toISOString().split("T")[0]}
         onChange={(e) => onSelect?.(e.target.valueAsDate as Date)}
       />
-      {/* <Calendar fullscreen={false} onSelect={(e) => onSelect?.(e.toDate())} /> */}
     </ContractDateContainer>
   );
 }

@@ -24,11 +24,15 @@ export const ContractItem = ({
   return (
     <tr>
       <Td>
-        <Input
-          onChange={() => onToggle?.(id)}
-          disabled={!isRemovable}
-          type="checkbox"
-        />
+        <label>
+          <div>
+            <Input
+              onChange={() => onToggle?.(id)}
+              disabled={!isRemovable}
+              type="checkbox"
+            />
+          </div>
+        </label>
       </Td>
       <Td style={{ width: "30%" }}>{company}</Td>
       <Td>{contractor?.id}</Td>

@@ -4,6 +4,7 @@ import Modal from "@base/Modal";
 import { ContractList } from "@domain/contracts/components/Contract.view";
 import ContractForm from "@domain/contracts/components/ContractForm";
 import useContracts from "@domain/contracts/hooks/use-contracts.hook";
+import useContractDelete from "@domain/contracts/hooks/use-contractsDelete.hooks";
 import useModalContext from "@src/hooks/use-modalContext.hooks";
 import { authorizationTokenAtom, loginUserAtom } from "@store/atoms/userAtom";
 import { Space, Typography } from "antd";
@@ -16,9 +17,19 @@ export default function Contracts() {
   const [authorizationToken] = useAtom(authorizationTokenAtom);
   const { isVisible, openModal, closeModal } = useModalContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedContractIds, setSelectedContractIds] = useState<{
-    [key: string]: boolean;
-  }>({});
+
+  const {
+    hasSelectedContracts,
+    handleToggleContract,
+    handleRemoveContract,
+    handleRemoveContracts,
+  } = useContractDelete({
+    onDelete: async (id) => {
+      return (
+        authorizationToken && ContractAPI.deleteContract(id, authorizationToken)
+      );
+    },
+  });
 
   useEffect(() => {
     authorizationToken && fetchContracts(authorizationToken);
@@ -27,26 +38,6 @@ export default function Contracts() {
   if (!loginUser) {
     return null;
   }
-
-  const handleToggleContract = (id: string) => {
-    setSelectedContractIds((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
-  };
-
-  const handleRemoveContract = async (id: string) => {
-    return (
-      authorizationToken && ContractAPI.deleteContract(id, authorizationToken)
-    );
-  };
-
-  const handleRemoveContracts = async (ids: string[]) => {
-    setIsLoading(true);
-    await Promise.all(ids.map(handleRemoveContract));
-    setIsLoading(false);
-    authorizationToken && fetchContracts(authorizationToken);
-  };
 
   return (
     <>
@@ -60,18 +51,13 @@ export default function Contracts() {
         <Space>
           <Button
             colorType="alert"
-            disabled={
-              isLoading ||
-              Object.entries(selectedContractIds).filter(([k, v]) => v)
-                .length <= 0
-            }
-            onClick={() =>
-              handleRemoveContracts(
-                Object.entries(selectedContractIds)
-                  .filter(([k, v]) => v)
-                  .map(([k]) => k)
-              )
-            }
+            disabled={isLoading || !hasSelectedContracts}
+            onClick={async () => {
+              setIsLoading(true);
+              await handleRemoveContracts();
+              authorizationToken && fetchContracts(authorizationToken);
+              setIsLoading(false);
+            }}
           >
             일괄 삭제
           </Button>
